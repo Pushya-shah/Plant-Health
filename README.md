@@ -17,6 +17,8 @@ Two main things you have to do is: run requirements.py file and make cnn model a
 
 Enjoy.
 
+----
+
 TODO:
 
 I will upload of working demo of plant health soon.
