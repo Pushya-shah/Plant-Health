@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		.accept_image
+		{
+			/*border:3px;*/
+			border-width: 3px;
+			border-color: black;
+			background-color: lightgrey;
+			width: 300px;
+			height: 400px;
+			border-radius: 30px;
+		}
+		.font_class
+		{
+			font-family: "Open Sans";
+		}
+		.image_pallet
+		{
+			width: 150px;
+			height:150px;
+			/*max-width:100%;*/
+		}
+		.main_body
+		{
+			background-size: cover;
+
+		}
+		.drag_box
+		{
+			width:100%;
+			border-style:dashed;
+			border-width: 2px;
+			border-color: red;
+
+		}
+		form input
+		{
+			position: relative;
+			display: inline;
+			margin: 0;
+			padding: 0;
+			height:200px;
+			width: 100%;
+			/*height: 100%;*/
+			outline: none;
+			opacity: 0;
+		}
+		form{
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			margin-top: -150px;
+			margin-left: -250px;
+			width: 500px;
+			height: 200px;
+			border: 4px dashed #fff;
+		}
+		form p
+		{
+			/*width: 100%;*/
+			/*height: 100%;*/
+			text-align: center;
+			line-height: -100px;
+			color: #fff;
+			font-family: Arial;
+			font-size: 20px;
+		}
+		
+	</style>
+	<link rel="stylesheet" href="bootstrap.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<title></title>
+</head>
+<body class="main_body">
+	<nav class="navbar navbar-dark fixed-top" style="background-color:  #fff" >
+		<a class="navbar-brand mr-auto"><img src="static/pic/logo.jpg" class="img-fluid" width="50" height="50" onclick="input_func()"></a> <!-- put logo here -->
+		<h3 class="mr-auto" style="color:black;" onclick="input_func()" > &nbsp;&nbsp;Plant Petho
+		</h3>
+		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+			Upload Plant Image
+		</button>
+	</nav>
+	<br>
+	<center>
+
+		
+
+		<div class="modal fade" id="myModal">
+		<div class= "modal-dialog modal-lg">
+		<div class="modal-content">
+		
+		<!-- <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div> -->
+		
+		<div class="modal-body">
+		<div class="card" style="border: 3px;width: 42em;background-color:#3e4444;border-radius: 5px">
+			<center>
+				<!-- <img src="static/pic/logo.jpg" width="100px" /> -->
+				<br>
+				<h3 class="font_class" style="color: #fff"> Image Search</h3>
+				<!-- <img src="https://img.icons8.com/dusk/64/000000/upload.png" style="width:80px" onclick=""> -->
+				<form name= "imp" method="POST" enctype="multipart/form-data" style="margin-bottom: 2em;">
+          			<div>
+            			<!-- <label class="custom-file-label" for="query_img">Upload an image</label> -->
+            			<input type="file" accept="image/*" name="query_img" value="http://localhost:5000/bg.jpg" id="temp"  />
+            			<p>Drag your files here or click in this area.</p>
+            			<input type="text" name="img_src" value="area" id="img_src" hidden 	>
+          			<button class="btn btn-success" type="submit">Submit</button>
+          			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          			<br>
+          			</div>
+				</form>
+          		
+			</center>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<div class="card-body btn-primary">
+					<div class="card" style="float:left;margin:5px;width: 200px">
+						<img src="static/image_suggestion/3.png" class="image_pallet" style="object-fit: contain;" onclick="func('3.png')">
+					</div>
+					<div class="card" style="float:left;margin:5px;width: 200px">
+						<img src="static/image_suggestion/12_1.png" class="image_pallet" style="object-fit: contain;" onclick="func('12_1.png')">
+					</div>
+					<div class="card"style="float:left;margin:5px;width: 200px">
+						<img src="static/image_suggestion/2.jpg" class="image_pallet" style="object-fit: contain;" onclick="func('2.jpg')">
+					</div>	
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<!-- <div class="container" >  -->
+        
+
+    <div class="container">
+      {% if searched %}
+        <div id="div_res">
+          <h2>Query Image:</h2>
+          <br>
+          {% if query_path %}
+          <img src="{{ query_path }}" width=300px>
+      {% endif %}
+          <br><br>
+          {% if predicted_class|length==0 %}
+          <h1> There are no relevant Object in the Image!! </h1>
+          {% endif %}
+          {% for i in unique_class %}
+
+            <span class="badge" style="background-color:red;color:white;font-size: 25px;cursor: pointer;" onclick= "func_fetch('{{json_form}}','{{i}}')">{{i}}</span>
+          {% endfor %}
+          <br><br>
+          <div id="disp_images">
+            {{for }}
+          </div>
+            
+        </div>
+      {% endif %}
+      {% if not searched %}
+      </div>
+      <div class="row row-content" id="img_slider">
+            <div class="col">
+                <div class="carousel slide" data-ride="carousel" id="mycarousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="static/slider/9.jpg" class="d-block img-fluid" style="opacity: 0.7">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="static/slider/10.jpg" class="img-fluid d-block"style="opacity: 0.7">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="static/slider/11.jpg" class="img-fluid d-block" style="opacity: 0.7">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="static/slider/12.jpg" class="img-fluid d-block" style="opacity: 0.7">
+                        </div>
+                       
+                    </div>
+                <ol class="carousel-indicators">
+                    <li class="active" data-target="#mycarousel" data-slide-to="0"></li>
+                    <li data-target="#mycarousel" data-slide-to="1"></li>
+                    <li data-target="#mycarousel" data-slide-to="2"></li>
+                </ol>
+                <a href="#mycarousel" class="carousel-control-prev" data-slide="prev">
+                    <span class="fa fa-angle-left"></span>
+                </a>
+                <a href="#mycarousel" class="carousel-control-next" data-slide="next">
+                    <span class="fa fa-angle-right"></span>
+                </a>
+                </div>
+            </div>
+        </div>
+        {%endif%}
+
+</body>
+<script src="static/js/jquery.slim.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+  $('form input').change(function () {
+    $('form p').text(this.files.length + " file(s) selected");
+  });
+});
+	function func(cell)
+	{
+		console.log(cell)
+		document.getElementById("img_src").value = cell;
+		document.imp.submit();
+	}func
+	function input_func()
+	{
+		document.imp.submit();
+	}
+	function func_clear()
+	{
+
+      	temp=document.getElementById("mycarousel");
+      	temp.innerHTML='';
+	}
+	function func_fetch(tag_dict,tag_dictionary_key)
+      {
+        var json_obj=JSON.parse(tag_dict)
+        if(json_obj!=null)
+        {
+          var list = json_obj[tag_dictionary_key];
+          d= document.getElementById("disp_images");
+          d.innerHTML = '';
+          for(i=0;i<list.length;i++)
+          {
+            var grid = document.createElement("div");
+            grid.style.class="card";
+            grid.style.margin="5px";
+            var elem = document.createElement("img");
+            elem.style.height="220px";
+            elem.style.width="220px";
+            elem.style.objectFit="contain";
+            elem.style.float="left";
+            elem.style.margin="10px";
+            elem.src = list[i];
+            grid.appendChild(elem);
+            d.appendChild(grid);
+          }
+        }
+      }
+
+</script>
+
+</html>
