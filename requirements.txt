@@ -1,0 +1,7 @@
+PIL
+opencv-python
+keras
+tensorflow
+django
+flask
+requests
