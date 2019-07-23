@@ -17,6 +17,8 @@ Two main things you have to do is:
 1) Run requirements.py file with "pip install -r requirements.txt"
 2) Make CNN model and save it then give it a name "E_demo.h5" and save that file in both django and flask folder.
 
+Area: Machine learning, Deep learning, Computer vision and Image processing.
+
 Enjoy.
 
 ----
