@@ -13,7 +13,9 @@ This project mainly have two components
 1) Working UI website in django framework
 2) Working API in flask framework
 
-Two main things you have to do is: run requirements.py file and make CNN model and save it then give it a name "E_demo.h5" and save that file in both django and flask folder.
+Two main things you have to do is: 
+1) Run requirements.py file with "pip install -r requirements.txt"
+2) Make CNN model and save it then give it a name "E_demo.h5" and save that file in both django and flask folder.
 
 Enjoy.
 
